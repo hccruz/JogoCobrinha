@@ -1,6 +1,7 @@
 let canvas = document.getElementById("cobra"); // Cria o elemento que irá rodar o jogo
 let context = canvas.getContext("2d");
 let box = 32;
+let pontuacao = 0;
 let cobra = []; // A cobrinha será criado como lista, nesta lista será armazenada as coordenadas, que quando pintadas, criam os quadrinhos
 cobra[0] = {
     x : 8 * box,
@@ -28,7 +29,7 @@ function criarCobrinha(){
         context.fillRect(cobra[i].x, cobra[i].y, box, box);
     }
 }
-
+    
 function desenhoComida() {
     context.fillStyle = "red";
     context.fillRect(comida.x, comida.y, box , box)
@@ -45,15 +46,15 @@ function update (event) {
 
 function iniciarJogo(){
 
-    if(cobra[0].x > 15 * box && direcao == "right") snake[0].x = 0;
-    if(cobra[0].x < 0 && direcao == "left") snake[0].x = 16 * box;
-    if(cobra[0].y > 15 * box && direcao == "down") snake[0].y = 0;
-    if(cobra[0].y < 0 && direcao == "up") snake[0].y = 16 * box;
+    if(cobra[0].x > 15 * box && direcao == "right") cobra[0].x = 0;
+    if(cobra[0].x < 0 && direcao == "left") cobra[0].x = 16 * box;
+    if(cobra[0].y > 15 * box && direcao == "down") cobra[0].y = 0;
+    if(cobra[0].y < 0 && direcao == "up") cobra[0].y = 16 * box;
 
     for(i = 1; i < cobra.length; i++){
         if(cobra[0].x == cobra[i].x && cobra[0].y == cobra[i].y) {
             clearInterval(jogo);
-            alert("Fim de Jogo!!! :( ");
+            alert("Fim de Jogo!!! Você conseguiu " + pontuacao + " comidinhas." );
         }
     }
 
@@ -74,9 +75,8 @@ function iniciarJogo(){
     } else {
         comida.x = Math.floor(Math.random() * 15 + 1) * box;
         comida.y = Math.floor(Math.random() * 15 + 1) * box;
+        pontuacao++;
     }
-
-    cobra.pop();
 
     let novaCabeca = {
         x: cobraX,
